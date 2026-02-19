@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mouse Drawer</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <canvas></canvas>
+
+    <div id="customer">
+      <label id="toggle_customer" class="toggle-btn hidden">
+        <span id="range_value">4px</span>
+        <input class="toggle-btn__input" type="checkbox" id="show_input" />
+        <span class="toggle-btn__marker"></span>
+      </label>
+      <label class="">
+        <input type="range" min="1" max="20" value="4" id="range_input" />
+      </label>
+      <div class="color_picker_section">
+        <label class="toggle-btn">
+          <input class="toggle-btn__input color_picker_input" type="radio" name="color_picker" value="red" id="red_input" checked />
+          <span class="toggle-btn__marker"></span>
+          <span>red</span>
+        </label>
+        <label class="toggle-btn">
+          <input class="toggle-btn__input color_picker_input" type="radio" name="color_picker" value="green" id="green_input" />
+          <span class="toggle-btn__marker"></span>
+          <span>green</span>
+        </label>
+        <label class="toggle-btn">
+          <input class="toggle-btn__input color_picker_input" type="radio" name="color_picker" value="blue" id="blue_input" />
+          <span class="toggle-btn__marker"></span>
+          <span>blue</span>
+        </label>
+      </div>
+      <button id="reset">Reset Draw</button>
+    </div>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
