@@ -26,20 +26,22 @@ window.addEventListener("load", () => {
     ctx.beginPath();
   };
   const draw = (event) => {
-    const drawing = (x, y) => {
-      if (isPainting) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      }
-    };
+    requestAnimationFrame(()=>{
+      const drawing = (x, y) => {
+        if (isPainting) {
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+      };
 
-    if (event.clientX) {
-      const { clientX, clientY } = event;
-      drawing(clientX, clientY);
-    } else if (event.changedTouches.length) {
-      const { clientX, clientY } = event.changedTouches[0];
-      drawing(clientX, clientY);
-    }
+      if (event.clientX) {
+        const { clientX, clientY } = event;
+        drawing(clientX, clientY);
+      } else if (event.changedTouches.length) {
+        const { clientX, clientY } = event.changedTouches[0];
+        drawing(clientX, clientY);
+      }
+    })
   };
   window.addEventListener("mousedown", startPainting);
   window.addEventListener("mouseup", stopPainting);
@@ -65,3 +67,4 @@ window.addEventListener("load", () => {
     });
   }
 });
+
