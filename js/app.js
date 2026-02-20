@@ -12,21 +12,27 @@ window.addEventListener("load", () => {
   canvas.style.backgroundColor = "#eee";
 
   let isPainting = false;
+  let color = "red";
+  let width = rangeInput.value;
 
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = rangeInput.value;
   ctx.lineCap = "round";
 
   const startPainting = (event) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = `${width}`;
     isPainting = true;
+    ctx.beginPath();
     draw(event);
   };
   const stopPainting = () => {
     isPainting = false;
-    ctx.beginPath();
+    ctx.closePath();
   };
   const draw = (event) => {
-    requestAnimationFrame(()=>{
+    if (event.scale !== 1) {
+      event.preventDefault();
+    }
+    requestAnimationFrame(() => {
       const drawing = (x, y) => {
         if (isPainting) {
           ctx.lineTo(x, y);
@@ -41,30 +47,30 @@ window.addEventListener("load", () => {
         const { clientX, clientY } = event.changedTouches[0];
         drawing(clientX, clientY);
       }
-    })
+    });
   };
   window.addEventListener("mousedown", startPainting);
   window.addEventListener("mouseup", stopPainting);
   window.addEventListener("mousemove", draw);
   window.addEventListener("touchstart", startPainting);
-  window.addEventListener("touchend", startPainting);
+  window.addEventListener("touchend", stopPainting);
   window.addEventListener("touchmove", draw);
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   });
   showInput.addEventListener("click", () => showInput.parentElement.classList.toggle("hidden"));
   resetBtn.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
   rangeInput.addEventListener("input", () => {
     rangeValue.innerHTML = `${rangeInput.value}px`;
-    ctx.lineWidth = rangeInput.value;
+    width = rangeInput.value;
   });
   for (const colorPickerInput of colorPickerInputs) {
     colorPickerInput.addEventListener("click", () => {
       if (colorPickerInput.checked) {
-        ctx.strokeStyle = colorPickerInput.value;
+        color = colorPickerInput.value;
       }
     });
   }
 });
-
