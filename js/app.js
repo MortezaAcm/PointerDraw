@@ -6,17 +6,19 @@ window.addEventListener("load", () => {
   const rangeValue = document.querySelector("#range_value");
   const rangeInput = document.querySelector("#range_input");
   const colorPickerInputs = document.querySelectorAll(".color_picker_input");
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  canvas.style.backgroundColor = "#eee";
-
   let isPainting = false;
   let color = "red";
   let width = rangeInput.value;
 
+  canvas.style.backgroundColor = "#eee";
   ctx.lineCap = "round";
 
+  const onResizeHandler = () => {
+    const { offsetWidth, offsetHeight } = document.documentElement;
+    canvas.width = offsetWidth;
+    canvas.height = offsetHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
   const startPainting = (event) => {
     ctx.strokeStyle = color;
     ctx.lineWidth = `${width}`;
@@ -49,22 +51,20 @@ window.addEventListener("load", () => {
       }
     });
   };
+
+  onResizeHandler();
   window.addEventListener("mousedown", startPainting);
   window.addEventListener("mouseup", stopPainting);
   window.addEventListener("mousemove", draw);
   window.addEventListener("touchstart", startPainting);
   window.addEventListener("touchend", stopPainting);
   window.addEventListener("touchmove", draw);
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  });
+  window.addEventListener("resize", onResizeHandler);
   showInput.addEventListener("click", () => showInput.parentElement.classList.toggle("hidden"));
   resetBtn.addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
   rangeInput.addEventListener("input", () => {
-    rangeValue.innerHTML = `${rangeInput.value}px`;
     width = rangeInput.value;
+    rangeValue.innerHTML = `${width}px`;
   });
   for (const colorPickerInput of colorPickerInputs) {
     colorPickerInput.addEventListener("click", () => {
