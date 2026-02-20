@@ -17,11 +17,11 @@ window.addEventListener("load", () => {
     canvas.width = offsetWidth;
     canvas.height = offsetHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = `${width}`;
     ctx.lineCap = "round";
   };
   const startPainting = (event) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = `${width}`;
     isPainting = true;
     draw(event);
   };
