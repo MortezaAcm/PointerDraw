@@ -11,29 +11,25 @@ window.addEventListener("load", () => {
   let width = rangeInput.value;
 
   canvas.style.backgroundColor = "#eee";
-  ctx.lineCap = "round";
 
   const onResizeHandler = () => {
     const { offsetWidth, offsetHeight } = document.documentElement;
     canvas.width = offsetWidth;
     canvas.height = offsetHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  };
-  const startPainting = (event) => {
     ctx.strokeStyle = color;
     ctx.lineWidth = `${width}`;
+    ctx.lineCap = "round";
+  };
+  const startPainting = (event) => {
     isPainting = true;
-    ctx.beginPath();
     draw(event);
   };
   const stopPainting = () => {
     isPainting = false;
-    ctx.closePath();
+    ctx.beginPath();
   };
   const draw = (event) => {
-    if (event.scale !== 1) {
-      event.preventDefault();
-    }
     requestAnimationFrame(() => {
       const drawing = (x, y) => {
         if (isPainting) {
